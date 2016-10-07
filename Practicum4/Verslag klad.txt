@@ -1,0 +1,45 @@
+Verslag schets
+    Aanpak:
+        Het programma is zoals als tip aangeboden in de opdracht in twee delen opgesplits, het zoeken van het goud en
+        het teruglopen vanaf het goud naar de beginpositie. Het vinden van het goud gebeurd aan de hand van het 
+        predicaat explore. Deze eindigt wanneer het goud is gevonden is waarna de weg terug gevonden kan worden.
+        explore heeft de vorm explore(Explored, Queue, Path, Breezes, Stenches) en maakt gebruik van breadth first search.
+        Explored zijn de vakjes die al ontdekt zijn, Queue zijn de vakjes waar vandaan nog verder ontdekt kan worden,
+        Path is het pad dat bewandeld wordt naar het goud en Breezes en Stenches geven de vakjes aan waarop breezes en 
+        stenches zijn waar te nemen. explore begint met in de queue het vakje (1,1) en vanuit daar wordt steeds de aangelegen
+        vakjes ontdekt en de bevindingen opgeslagen. Wanneer een vakje veilig is kan vanuit daar verder ontdekt worden en wordt
+        dit vakje aan de Queue toegevoegd. Dit wordt herhaald totdat het goud gevonden is, of totdat explore faalt.
+        
+    Stukje Thijs over veilig terug komen:
+        Voor de lijst van acties om terug te komen van de (X,Y) waar het goud ligt naar (1,1) gebruiken we een aangepaste versie van
+	de pathfinding van het vorige practicum. Het verschil zit erin dat we hier de lijst van uiteindelijke acties niet omdraaien en
+	de manier waarop we controleren of een vakje veilig is. Nu doen we dat namelijk door te kijken of we dat vakje al eerder
+	verkend hebben, waardoor we dus ook zeker weten dat het een veilig vakje is.
+        
+    Voordeel van springen:
+        Wanneer je op een vakje bent, bijvoorbeeld (1,2) en uit je waarnemingen kan je afleiden dat (2,1) sowieso veilig is, dan
+        is het sneller om te springen van (1,2) naar (2,1), dan door eerst terug te gaan. Deze afleiding kan gemaakt worden doordat
+        op (1,1) geen breeze of stench waar te nemen is en (2,1) dus sowieso veilig is. Dit kan dus alleen naar vakjes waarvan je weet
+        dat ze 100% zeker veilig zijn en schuin omhoog springen zal dus nooit nuttig zijn.
+        
+        
+    Situaties waarin het goud niet gevonden kan worden:
+        Wanneer een deel van het veld geblokeerd wordt door pits en het goud zich na dat gedeelte bevindt kan je daar niet komen en
+        dus ook niet achterhalen waar het goud precies is. Dit zou kunnen voorkomen doordat bijvoorbeeld op de hele derde horizontale 
+        rij alleen maar pits bevinden. Het goud moet zich dus op de vierde horizontale bevinden, maar waar is niet te achterhalen.
+        
+        Een andere situatie zou zijn wanneer op (2,1) of (1,2) een pit ligt. Er kan dan niet zonder risico een stap gezet worden en
+        explore zal dus false terug geven.
+        
+    Situatie figuur 1:
+        De agent kan niet met 100% zekerheid zeggen of het veilig is om vanaf vakje (3,2) verder te gaan. Onze agent zal neemt geen
+        risico en zal na het verder doorzoeken tot de conclusie komen dat het goud niet gevonden kan worden
+    
+    Drie-dimensionale kubus:
+        Wij verwachten dat een groot deel van het programma niet heel erg aangepast hoeft te worden wanneer er een extra dimensie
+        bijkomt. Vrijwel alle predicaten moeten een extra argument hebben voor de derde coordinaat maar het plannen zal op een zelfde
+        manier kunnen gebeuren. 
+    
+    
+        
+        

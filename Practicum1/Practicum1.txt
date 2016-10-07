@@ -1,0 +1,211 @@
+﻿Practicum1 Intelligente Systemen
+
+Thijs Klaver            3711633
+Bas Meesters            3700569 
+
+UTF-8 encoding    
+
+1. 	a.  Scheert (a,b) betekent a scheert b.
+	    Predikaat logische formula:
+			a. 	∀x, y: Persoon(y) ∧ Scheert(y, y) ∧ Barbier(x) ⇒ ¬Scheert(x,y)
+			b. 	∀ i, j: Persoon(j) ∧ ¬Scheert(j,j) ∧ Barbier(i) ⇒ Scheert(i,j)
+			c. 	∀ p: Barbier(p) ⇒ Persoon(p)
+    
+  		CNF:
+			a. 	∀x, y: Persoon(y) ∧ Scheert(y, y) ∧ Barbier(x) ⇒ ¬Scheert(x,y)
+
+				Vervang implicatie:
+				∀ x, y: ¬(Peroon(y) ∧ Scheert(y,y) ∧ Barbier(x)) ∨ ¬Scheert(x,y)
+
+				Verwerk negaties in haakjes:
+				∀ x, y: ¬Persoon(y) ∨ ¬Scheert(,y,y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y)
+
+				Werk kwantoren weg:
+			  	¬Persoon(y) ∨ ¬Scheert(y,y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y)
+
+			b. 	∀ i, j: Persoon(j) ∧ ¬Scheert(j,j) ∧ Barbier(i) ⇒ Scheert(i,j)
+
+				Vervang implicatie:
+				∀ i, j: ¬(Persoon(j) ∧ ¬Scheert (j,j) ∧ Barbier(i)) ∨ Scheert(i, j)
+				
+				Verwerk negaties in haakjes:
+				∀ i, j: ¬Persoon(j) ∨ Scheert(j,j) ∨ ¬Barbier(i) ∨ Scheert(i,j)
+
+				Werk kwantoren weg
+			  	¬Persoon(j) ∨ Scheert(j,j) ∨ ¬Barbier(i) ∨ Scheert(i,j)
+
+			c. 	∀ p: Barbier(p) ⇒ Persoon(p)
+
+				Verwerk implicatie:
+				∀ p: ¬Barbier(p) ∨ Persoon(p)
+
+				Werk kwantor weg:
+			  	¬Barbier(p) ∨ Persoon(p)
+
+  		Resolutie:
+				¬Persoon(y) ∨ ¬Scheert(y,y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y), 
+				¬Persoon(j) ∨ Scheert(j,j) ∨ ¬Barbier(i) ∨ Scheert(i,j),
+				¬Barbier(p) ∨ Persoon(p)
+			1. Unificeer j met y
+				¬Persoon(y) ∨ ¬Scheert(y,y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y), 
+				¬Persoon(y) ∨ Scheert(y,y) ∨ ¬Barbier(i) ∨ Scheert(i,y),
+				¬Barbier(p) ∨ Persoon(p)
+			2. Verwijder ¬Scheert(y,y) en Scheert(y,y)
+				¬Persoon(y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y), 
+				¬Persoon(y) ∨ ¬Barbier(i) ∨ Scheert(i,y),
+				¬Barbier(p) ∨ Persoon(p)
+			3. Unificeer i met x
+				¬Persoon(y) ∨ ¬Barbier(x) ∨ ¬Scheert(x,y), 
+				¬Persoon(y) ∨ ¬Barbier(x) ∨ Scheert(x,y),
+				¬Barbier(p) ∨ Persoon(p)
+			4. Verwijder Scheert(x,y) en ¬Scheert(x,y)
+				¬Persoon(y) ∨ ¬Barbier(x),
+				¬Persoon(y) ∨ ¬Barbier(x),
+				¬Barbier(p) ∨ Persoon(p)
+			5. Unificeer p met y
+				¬Persoon(y) ∨ ¬Barbier(x),
+				¬Persoon(y) ∨ ¬Barbier(x),
+				¬Barbier(y) ∨ Persoon(y)
+			6. Verwijder ¬Persoon(y) en Persoon(y)
+				¬Barbier(x),
+				¬Barbier(x),
+				¬Barbier(y)
+			7. Verwijder dubbelen en kwantificeer y met x
+				¬Barbier(x)
+			Conclusie:
+				Er is geen barbier
+  
+	b.  Kind(a, b) betekent a is een kind van b.  
+		Predikaat logische formula:
+			a 	∀ x: Draak(x) ∧ (∀ y: Kind(y,x) ⇒ Vliegen(y)) ⇒ Blij(x)
+			b 	∀ i: Draak(i) ∧ Groen(i) ⇒ Vliegen(i)
+			c 	∀ p: Draak(p) ∧ ∃q: Draak(q) ∧ Kind(p,q) ∧ Groen(q) ⇒ Groen(p)
+    
+		CNF: 
+			a. 	∀ x: Draak(x) ∧ (∀ y: Kind(y,x) ⇒ Vliegen(y)) ⇒ Blij(x)
+
+				Verwerk implicatie:
+				∀ x: ¬(Draak(x) ∧ (∀ y: Kind(y,x) ⇒ Vliegen(y)) ∨ Blij(x)
+
+				Verwerk implicatie:
+				∀ x: ¬(Draak(x) ∧ (∀ y: ¬Kind(y,x) ∨ Vliegen(y)) ∨ Blij(x)
+
+				Verwerk negaties in haakjes:
+				∀ x: ¬Draak(x) ∨ ¬(∀ y: ¬Kind(y,x) ∨ Vliegen(y)) ∨ Blij(x)
+
+				Verwerk negaties in haakjes:
+				∀ x: ¬Draak(x) ∨ (∀ y: Kind(y,x) ∧ ¬Vliegen(y)) ∨ Blij(x)
+
+				Werk kwantoren weg:
+				(¬Draak(x) ∨ Kind(y,x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)) 
+                  
+			b. 	∀ i: Draak(i) ∧ Groen(i) ⇒ Vliegen(i)
+
+				Verwerk implicatie:
+				∀ i: ¬(Draak(i) ∧ Groen(i)) ∨ Vliegen(i)
+
+				Verwerk negaties in haakjes:
+				∀ i: ¬Draak(i) ∨ ¬Groen(i) ∨ Vliegen(i)
+
+				Werk kwantor weg:
+				¬Draak(i) ∨ ¬Groen(i) ∨ Vliegen(i)
+
+			c. 	∀ p: Draak(p) ∧ ∃q: Draak(q) ∧ Kind(p,q) ∧ Groen(q) ⇒ Groen(p)
+
+				Verwerk implicatie:
+				∀ p: ¬(Draak(p) ∧ ∃q: Draak(q) ∧ Kind(p,q) ∧ Groen(q)) ∨ Groen(p)
+
+				Skolemizatie met f(p) = q:
+				∀ p: ¬(Draak(p) ∧ (Draak(f(p)) ∧ Kind(p, f(p)) ∧ Groen(f(p)))) ∨ Groen(p)
+
+				Verwerk negaties in haakjes:
+				∀ p: ¬Draak(p) ∨ ¬(Draak(f(p)) ∧ Kind(p, f(p)) ∧ Groen(f(p))) ∨ Groen(p)
+
+				Verwerk negaties in haakjes:
+				∀ p:¬Draak(p) ∨ ¬Draak(f(p)) ∨ ¬Kind(p, f(p)) ∨ ¬Groen(f(p)) ∨ Groen(p)
+
+				Werk kwantor weg:
+				¬Draak(p) ∨ ¬Draak(f(p)) ∨ ¬Kind(p, f(p)) ∨ ¬Groen(f(p)) ∨ Groen(p)
+				
+		Resolutie:
+				(¬Draak(x) ∨ Kind(y,x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(i) ∨ ¬Groen(i) ∨ Vliegen(i),
+				¬Draak(p) ∨ ¬Draak(f(p)) ∨ ¬Kind(p, f(p)) ∨ ¬Groen(f(p)) ∨ Groen(p)
+			1. Unificeer p met y en f(p) met x
+				(¬Draak(x) ∨ Kind(y,x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(i) ∨ ¬Groen(i) ∨ Vliegen(i),
+				¬Draak(y) ∨ ¬Draak(x) ∨ ¬Kind(y, x) ∨ ¬Groen(x) ∨ Groen(y)
+			2. Verwijder ¬Kind(y, x) en Kind(y,x)
+				(¬Draak(x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(i) ∨ ¬Groen(i) ∨ Vliegen(i),
+				¬Draak(y) ∨ ¬Draak(x) ∨ ¬Groen(x) ∨ Groen(y)
+			3. Unificeer i met y
+				(¬Draak(x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(y) ∨ ¬Groen(y) ∨ Vliegen(y),
+				¬Draak(y) ∨ ¬Draak(x) ∨ ¬Groen(x) ∨ Groen(y)
+			4. Verwijder dubbele ¬Draak(y) en ¬Draak(x)
+				(Blij(x)) ∧ (¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(y) ∨ ¬Groen(y) ∨ Vliegen(y),
+				¬Draak(x) ∨ ¬Groen(x) ∨ Groen(y)
+			5. Verwijder Groen(y) en ¬Groen(y)
+				(¬Draak(x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ ¬Vliegen(y) ∨ Blij(x)),
+				¬Draak(y) ∨ Vliegen(y),
+				¬Draak(x) ∨ ¬Groen(x)
+			6. Verwijder ¬Vliegen(y) en Vliegen(y)
+				(¬Draak(x) ∨ Blij(x)) ∧ (¬Draak(x) ∨ Blij(x)),
+				¬Draak(y)
+				¬Draak(x) ∨ ¬Groen(x)
+			7. Verwijder dubbele ¬Draak(x) 
+				Blij(x) ∧ (Blij(x),
+				¬Draak(y),
+				¬Draak(x) ∨ ¬Groen(x)
+			8. Verwijder redundante Blij(x)
+				Blij(x),
+				¬Draak(y),
+				¬Draak(x) ∨ ¬Groen(x)
+			9. Unificeer y met x en verwijder dubbele ¬Draak(x) 
+				Blij(x),
+				¬Draak(x),
+				¬Groen(x)
+			Conclusie: 	Dus er is geen x waarvoor x geen draak is en niet groen maar wel blij, dus alle groene draken zijn blij.
+  
+2. 	Kamer(x,y) zegt of (x,y) een geldige positie is in de Wumpus wereld.
+	∀ x, y: Kamer(x,y) ⇔ (x > 0 ∧ y > 0 ∧ x <= 4 ∧ y <=4)
+
+	Aangrenzend(x,y,a,b) zegt of posities (x,y) en (a,b) geldige kamers en aangrenzend zijn.
+	∀ x, y, a, b: Aangrenzend(x,y,a,b) ⇔ Kamer(x,y) ∧ Kamer(a,b) ∧ (((x = a + 1 ∨ x = a - 1) ∧ y = b) ∨ ((y = b + 1 ∨ y = b - 1) ∧ x = a))
+   
+3.  Glinster (x,y) betekent dat op positie (x,y) glinster waar te nemen is
+	∀ x, y: At(goud, x, y) ⇔ Glinster(x,y)
+
+	Bries(a,b) betekent dat op positie (a,b) een bries waar te nemen is.
+	∀ x, y: At(kuil, x, y) ⇒ (∀ a, b: Aangrezend (x,y,a,b) ⇒ Bries(a,b))
+
+	Stank(a,b) betekent dat op positie (a,b) een stank waar te nemen is.
+	∀ x, y: At(wumpus, x, y) ⇒ (∀ a, b: Aangrezend (x,y,a,b) ⇒ Stank(a,b))
+
+	Sluit alle kamers uit waar geen kuil of wumpus aanwezig kan zijn:
+	∀ x, y: ¬Bries(x,y) ⇒ (∀ a,b: Aangrenzend (x,y,a,b) ⇒ ¬At(kuil, a,b))
+	∀ x, y: ¬Stank(x,y) ⇒ (∀ a,b: Aangrenzend (x,y,a,b) ⇒ ¬At(wampus, a,b))
+    
+4. 	At(z, x, y) wordt vervangen door At(z, x, y, s) waarbij s de situatie is
+	Possibility axioms:
+		∀ x, y: (At(Agent, x, y, s) ∧ Kamer(x, y + 1)) → Poss(GoNorth,s)
+		∀ x, y: (At(Agent, x, y, s) ∧ Kamer(x + 1, y)) → Poss(GoEast,s)
+		∀ x, y: (At(Agent, x, y, s) ∧ Kamer(x, y - 1)) → Poss(GoSouth,s)
+		∀ x, y: (At(Agent, x, y, s) ∧ Kamer(x - 1, y)) → Poss(GoWest,s)
+
+	Successor state axioms:
+		∀a,s,x,y : Poss(a,s) → (
+									At(Agent,x,y,Result(a,s)) ⇔ 
+									(
+										(At(Agent, x ,y - 1 ,s) ∧ a=GoNorth) ∨ 
+										(At(Agent, x - 1, y, s) ∧ a=GoEast)  ∨ 
+										(At(Agent, x, y + 1, s) ∧ a=GoSouth) ∨ 
+										(At(Agent, x + 1, y, s) ∧ a=GoSouth) ∨
+										(At(Agent, x, y, s)     ∧ (a!=GoNorth ∨ a!=GoEast ∨ a!=GoSouth ∨ a!=GoWest))
+                                    )
+								)   
+
+	Voor het hebben van het goud:
+		∀a,s : Poss(a,s) → (Hebben(Goud,Result(a,s)) ⇔ (Hebben(Goud,s))
